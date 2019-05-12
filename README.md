@@ -13,7 +13,7 @@ To build this project in Houdini (Linux):
 
 4. Make a build folder the top level of the repository.
 
-5. Run cmake .. in the build folder (or cmake -DUSEEIGEN .. if Eigen 3 is preferred over the native Houdini solver).
+5. Run cmake .. in the build folder (if Eigen is preferred over native Houdini's Conjugate Gradient method, include -DUSEEIGEN=ON).
 
 6. Run make in the build folder.
 
