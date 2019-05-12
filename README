@@ -1,6 +1,6 @@
 # Adaptive Viscosity Solver Plugin for Houdini
 
-# Build
+## Build
 To build this project in Houdini (Linux):
 
 1. Install Houdini 17.0 or higher.
@@ -20,7 +20,7 @@ To build this project in Houdini (Linux):
 	7.2 Press "tab" in the Network Editor and select a "DOP Network" and place it in the editor.
 	7.3 Jump into the DOP Network, press "tab" again and verify that "HDK Adaptive Viscosity" is searchable.
 
-# Usage
+## Usage
 
 1. Build your liquid simulation scene.
 
@@ -31,7 +31,7 @@ To build this project in Houdini (Linux):
 4. Place the "HDK Adaptive Viscosity" solver, wire it into the disabled "gasviscosity" DOP.
 
 
-# Legal
+## Legal
 
 Copyright 2019 Ryan Goldade
 
