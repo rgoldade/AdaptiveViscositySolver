@@ -18,9 +18,9 @@ To build this project in Houdini (Linux):
 6. Run make in the build folder.
 
 7. Verify that it was added to Houdini by:
-	7.1 Launch Houdini.
-	7.2 Press "tab" in the Network Editor and select a "DOP Network" and place it in the editor.
-	7.3 Jump into the DOP Network, press "tab" again and verify that "HDK Adaptive Viscosity" is searchable.
+	- Launch Houdini.
+	- Press "tab" in the Network Editor and select a "DOP Network" and place it in the editor.
+	- Jump into the DOP Network, press "tab" again and verify that "HDK Adaptive Viscosity" is searchable.
 
 ## Usage
 
