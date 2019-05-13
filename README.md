@@ -1,6 +1,6 @@
 # Adaptive Viscosity Solver Plugin for Houdini
 
-Source code from the SIGGRAPH 2019 technical paper [An Adaptive Variational Finite Difference Framework for Efficient Symmetric Octree Viscosity](https://cs.uwaterloo/~rgoldade/adaptiveviscosity/)
+Source code from the SIGGRAPH 2019 technical paper [An Adaptive Variational Finite Difference Framework for Efficient Symmetric Octree Viscosity](https://cs.uwaterloo.ca/~rgoldade/adaptiveviscosity/)
 
 ## Build
 To build this project in Houdini (Linux):
