@@ -4,7 +4,7 @@
 #include <GAS/GAS_SubSolver.h>
 #include <GAS/GAS_Utils.h>
 
-#include "HDK_Common.h"
+#include "HDK_Utilities.h"
 #include "HDK_OctreeGrid.h"
 #include "HDK_OctreeVectorFieldInterpolator.h"
 

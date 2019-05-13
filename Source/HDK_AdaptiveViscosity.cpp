@@ -17,8 +17,6 @@
 #include <UT/UT_FixedVector.h>
 #include <UT/UT_PerfMonAutoEvent.h>
 
-#include "HDK_Common.h"
-
 void
 initializeSIM(void *)
 {

@@ -10,7 +10,7 @@
 #include <UT/UT_ThreadedAlgorithm.h>
 #include <UT/UT_VoxelArray.h>
 
-#include "HDK_Common.h"
+#include "HDK_Utilities.h"
 
 // Houdini uses a prefix instead of namespaces, so we'll use HDK to prevent
 // and collisions with their internal tools.

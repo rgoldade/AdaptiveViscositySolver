@@ -11,7 +11,7 @@
 #include <UT/UT_Vector3.h>
 #include <UT/UT_VoxelArray.h>
 
-#include "HDK_Common.h"
+#include "HDK_Utilities.h"
 #include "HDK_OctreeGrid.h"
 
 #include <iomanip>
