@@ -981,8 +981,7 @@ HDK_OctreeGrid::activeUnitTestPartial(bool &passed,
 				for (auto cellItem : adjacentFaceCellList)
 				{
 				    UT_Vector3i localCell(cellItem[0], cellItem[1], cellItem[2]);
-				    int localLevel = cellItem[3];
-				    assert(localLevel == level - 1);
+				    assert(cellItem[3] == level - 1);
 
 				    OctreeCellLabel nephewLabel = getCellLabel(localCell, level -1);
 				    if (nephewLabel != ACTIVE)

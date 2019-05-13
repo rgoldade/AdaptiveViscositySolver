@@ -2417,7 +2417,9 @@ applyToMatrix(
 		const UT_Array<HDK_AdaptiveViscosity::StressStencilFace> &stencilFaces,
 		const UT_Array<fpreal> &boundaryStencilFaces)
 {
+#if !defined(NDEBUG)
     bool foundSelf = false;
+#endif
     int faceCount = stencilFaces.entries();
 
     for (int i = 0; i < faceCount; ++i)
@@ -2425,7 +2427,11 @@ applyToMatrix(
         if (stencilFaces[i].myFaceIndex == velocityIndex)
         {
             coefficient *= stencilFaces[i].myCoefficient;
+
+#if !defined(NDEBUG)
             foundSelf = true;
+#endif
+
             break;
         }
     }
@@ -2479,7 +2485,10 @@ HDK_AdaptiveViscosity::buildOctreeSystemFromStencilsPartial(
     const UT_Array<UT_Array<SIM_RawIndexField>> &edgeStressIndices = parms.myEdgeStressIndices;
     const UT_Array<SIM_RawIndexField> &centerStressIndices = parms.myCenterStressIndices;
 
+#if !defined(NDEBUG)
     const SIM_RawField &centerIntegrationWeights = parms.myCenterIntegrationWeights;
+#endif
+
     const SIM_VectorField &faceIntegrationWeights = parms.myFaceIntegrationWeights;
 
     const HDK_OctreeGrid &octreeLabels = parms.myOctreeLabels;
