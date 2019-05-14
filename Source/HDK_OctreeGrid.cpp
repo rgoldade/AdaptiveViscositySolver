@@ -316,7 +316,7 @@ HDK_OctreeGrid::setActiveCellsAndParentListPartial(UT_Array<UT_Array<UT_Vector3i
         }
     }
 
-    for (int i = 0; i < isTileOccupiedList.entries(); ++i)
+    for (exint i = 0; i < isTileOccupiedList.entries(); ++i)
     {
         if (localIsTileOccupiedList[i])
             isTileOccupiedList[i] = true;
@@ -330,15 +330,15 @@ HDK_OctreeGrid::uncompressParentTilesPartial(const UT_Array<bool> &isTileOccupie
 {
     UT_Interrupt *boss = UTgetInterrupt();
 
-    int start, end;
-    int elements = isTileOccupiedList.entries();
+    exint start, end;
+    exint elements = isTileOccupiedList.entries();
 
     info.divideWork(elements, start, end);
 
     if (start == end)
         return;
 
-    for (int i = start, iend = end; i < iend; ++i)
+    for (exint i = start, iend = end; i < iend; ++i)
     {
         if (!(i & 127))
         {
@@ -361,8 +361,8 @@ HDK_OctreeGrid::setParentCellLabelPartial(const UT_Array<UT_Vector3i> &newParent
 {
     UT_Interrupt *boss = UTgetInterrupt();
 
-    int start, end;
-    int elements = newParentCellList.entries();
+    exint start, end;
+    exint elements = newParentCellList.entries();
 
     info.divideWork(elements, start, end);
 
@@ -377,8 +377,8 @@ HDK_OctreeGrid::setParentCellLabelPartial(const UT_Array<UT_Vector3i> &newParent
     // be trying to set the same label for a parent. Check that the value at
     // the start isn't also included in the previous work group.
 
-    int localStart = start;
-    const int localEnd = end;
+    exint localStart = start;
+    const exint localEnd = end;
 
     if (localStart > 0 && newParentCellList[localStart] == newParentCellList[localStart - 1])
     {
@@ -393,7 +393,7 @@ HDK_OctreeGrid::setParentCellLabelPartial(const UT_Array<UT_Vector3i> &newParent
 
     UT_Vector3i oldCell(-1, -1, -1);
 
-    for (int i = localStart; i < localEnd; ++i)
+    for (exint i = localStart; i < localEnd; ++i)
     {
         if (!(i & 127))
         {
@@ -435,11 +435,6 @@ HDK_OctreeGrid::setFaceGradingPartial(UT_Array<UT_Array<UT_Vector3i>> &parallelS
 
     UT_Vector3i voxelRes;
     myOctreeGridLabels[level].getVoxelRes(voxelRes[0], voxelRes[1], voxelRes[2]);
-
-    UT_Vector3i parentGridSize;
-    myOctreeGridLabels[level + 1].getVoxelRes(parentGridSize[0],
-					    parentGridSize[1],
-					    parentGridSize[2]);
 
     for (vit.rewind(); !vit.atEnd(); vit.advanceTile())
     {

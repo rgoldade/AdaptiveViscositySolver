@@ -552,11 +552,6 @@ private:
 				    const int level,
 				    const UT_JobInfo &info);
 
-    const UT_Vector3I cell_children[8] = {UT_Vector3I(0, 0, 0), UT_Vector3I(1, 0, 0),
-					    UT_Vector3I(1, 0, 1), UT_Vector3I(0, 0, 1),
-					    UT_Vector3I(0, 1, 0), UT_Vector3I(1, 1, 0),
-					    UT_Vector3I(1, 1, 1), UT_Vector3I(0, 1, 1)};
-
     // Markers to label active cells, if the cell is "above"
     // or "below" the leaf (aka active cell).
     UT_Array<SIM_RawField> myOctreeGridLabels;
