@@ -1,6 +1,6 @@
-#include <queue>
-
 #include "HDK_AdaptiveViscosity.h"
+
+#include <queue>
 
 #include <GU/GU_Detail.h>
 
@@ -75,8 +75,8 @@ HDK_AdaptiveViscosity::getDopDescription()
 
     static PRM_Name theUseEnhancedGradientsName("useEnhancedGradients", "Use Enhanced Gradients");
 
-    static PRM_Name thePrintOctreeName("doOutputOctree", "Output Octree Geometry");
-    static PRM_Name theOnlyPrintOctreeName("onlyOutputOctree", "Only Output Octree");
+    static PRM_Name thePrintOctreeName("doPrintOctree", "Output Octree Geometry");
+    static PRM_Name theOnlyPrintOctreeName("onlyPrintOctree", "Only Output Octree");
 
     static PRM_Name theOctreeGeometryName("octreeGeometry", "Octree Geometry");
     static PRM_Default theOctreeGeometryNameDefault(0, "OctreeGeometry");
@@ -280,7 +280,7 @@ HDK_AdaptiveViscosity::solveGasSubclass(SIM_Engine &engine, SIM_Object *obj,
     //
     ////////////////////////////////////////////
 
-    if (getOnlyPrintOctree())
+    if (getDoPrintOctree())
     {
         SIM_GeometryCopy *octreeGeometry = getOrCreateGeometry(obj, "octreeGeometry");
 
@@ -600,7 +600,7 @@ HDK_AdaptiveViscosity::solveGasSubclass(SIM_Engine &engine, SIM_Object *obj,
     ////////////////////////////////////////////
 
     {
-        UT_PerfMonAutoSolveEvent event(this, "Solve linear system");
+        UT_PerfMonAutoSolveEvent event(this, "Solve Linear System");
 
         const fpreal solverTolerance = getSolverTolerance();
         const int maxSolverIterations = getMaxIterations();
@@ -659,7 +659,7 @@ HDK_AdaptiveViscosity::solveGasSubclass(SIM_Engine &engine, SIM_Object *obj,
     ////////////////////////////////////////////
 
     {
-        UT_PerfMonAutoSolveEvent event(this, "Apply octree solution to regular grid");
+        UT_PerfMonAutoSolveEvent event(this, "Apply Octree Solution to Regular Grid");
 
     	UT_Array<UT_Array<SIM_RawField>> octreeVelocity;
 	octreeVelocity.setSize(octreeLevels);

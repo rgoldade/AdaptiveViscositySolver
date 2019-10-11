@@ -1,5 +1,5 @@
-#ifndef HDK_COMMON_H
-#define HDK_COMMON_H
+#ifndef HDK_UTILITIES_H
+#define HDK_UTILITIES_H
 
 #ifdef USEEIGEN
     #include "Eigen/Sparse"
@@ -56,167 +56,177 @@ public:
 #endif
 
 
-SYS_FORCE_INLINE UT_Vector3i HDKcellToFace(UT_Vector3i cell, const int axis, const int direction)
+SYS_FORCE_INLINE UT_Vector3i HDKcellToFace(const UT_Vector3i &cell, const int axis, const int direction)
 {
-    assert(axis >= 0 && axis < 3);
+    UT_Vector3i face(cell);
     if (direction == 1)
-	++cell[axis]; 
+	++face[axis]; 
     else assert(direction == 0);
 
-    return cell;
+    return face;
 }
 
-SYS_FORCE_INLINE UT_Vector3i HDKcellToCell(UT_Vector3i cell, const int axis, const int direction)
+SYS_FORCE_INLINE UT_Vector3i HDKcellToCell(const UT_Vector3i &cell, const int axis, const int direction)
 {
-    assert(axis >= 0 && axis < 3);
+    UT_Vector3i adjacentCell(cell);
     if (direction == 0)
-	--cell[axis];
+	--adjacentCell[axis];
     else
     {
-	++cell[axis];
+	++adjacentCell[axis];
 	assert(direction == 1);
     }
 
-    return cell;
+    return adjacentCell;
 }
 
-SYS_FORCE_INLINE UT_Vector3i HDKcellToEdge(UT_Vector3i cell, const int edgeAxis, const int edgeIndex)
+SYS_FORCE_INLINE UT_Vector3i HDKcellToEdge(const UT_Vector3i &cell, const int edgeAxis, const int edgeIndex)
 {
     assert(edgeAxis >= 0 && edgeAxis < 3);
     assert(edgeIndex >= 0 && edgeIndex < 4);
 
+    UT_Vector3i edge(cell);
     for (int axisOffset : {0,1})
     {
 	if (edgeIndex & (1 << axisOffset))
 	{
 	    int localAxis = (edgeAxis + 1 + axisOffset) % 3;
-	    ++cell[localAxis];
+	    ++edge[localAxis];
 	}
     }
 
-    return cell;
+    return edge;
 }
 
-SYS_FORCE_INLINE UT_Vector3i HDKcellToNode(UT_Vector3i cell, const int nodeIndex)
+SYS_FORCE_INLINE UT_Vector3i HDKcellToNode(const UT_Vector3i &cell, const int nodeIndex)
 {
     assert(nodeIndex >= 0 && nodeIndex < 8);
 
+    UT_Vector3i node(cell);
     for (int axis : {0,1,2})
     {
 	if (nodeIndex & (1 << axis))
-	    ++cell[axis];
+	    ++node[axis];
     }
+
+    return node;
+}
+
+SYS_FORCE_INLINE UT_Vector3i HDKfaceToCell(const UT_Vector3i &face, const int axis, const int direction)
+{
+    assert(axis >= 0 && axis < 3);
+
+    UT_Vector3i cell(face);
+    if (direction == 0)
+	--cell[axis];
+    else
+	assert(direction == 1);
 
     return cell;
 }
 
-SYS_FORCE_INLINE UT_Vector3i HDKfaceToCell(UT_Vector3i face, const int axis, const int direction)
-{
-    assert(axis >= 0 && axis < 3);
-    if (direction == 0)
-	--face[axis];
-    else
-	assert(direction == 1);
-
-    return face;
-}
-
-SYS_FORCE_INLINE UT_Vector3i HDKfaceToEdge(UT_Vector3i face, const int faceAxis,
+SYS_FORCE_INLINE UT_Vector3i HDKfaceToEdge(const UT_Vector3i &face, const int faceAxis,
 					    const int edgeAxis, const int direction)
 {   
     assert(faceAxis >= 0 && faceAxis < 3 && edgeAxis >= 0 && edgeAxis < 3);
     assert(faceAxis != edgeAxis);
 
+    UT_Vector3i edge(face);
     if (direction == 1)
     {
 	int offsetAxis = 3 - faceAxis - edgeAxis;
-	++face[offsetAxis];
+	++edge[offsetAxis];
     }
     else
 	assert(direction == 0);
 
-    return face;
+    return edge;
 }
 
-SYS_FORCE_INLINE UT_Vector3i HDKfaceToNode(UT_Vector3i face, const int faceAxis, const int nodeIndex)
+SYS_FORCE_INLINE UT_Vector3i HDKfaceToNode(const UT_Vector3i &face, const int faceAxis, const int nodeIndex)
 {
     assert(faceAxis >= 0 && faceAxis < 3);
     assert(nodeIndex >= 0 && nodeIndex < 4);
 
+    UT_Vector3i node(face);
     for (int axisOffset : {0,1})
     {
 	if (nodeIndex & (1 << axisOffset))
 	{
 	    int localAxis = (faceAxis + 1 + axisOffset) % 3;
-	    ++face[localAxis];
+	    ++node[localAxis];
+	}
+    }
+
+    return node;
+}
+
+SYS_FORCE_INLINE UT_Vector3i HDKedgeToFace(const UT_Vector3i &edge, const int edgeAxis,
+					    const int faceAxis, const int direction)
+{
+    assert(faceAxis >= 0 && faceAxis < 3 && edgeAxis >= 0 && edgeAxis < 3);
+    assert(faceAxis != edgeAxis);
+
+    UT_Vector3i face(edge);
+    if (direction == 0)
+    {
+	int offsetAxis = 3 - faceAxis - edgeAxis;
+	--face[offsetAxis];
+    }
+    else
+	assert(direction == 1);
+
+    return face;
+}
+
+SYS_FORCE_INLINE UT_Vector3i HDKedgeToCell(const UT_Vector3i &edge, const int edgeAxis, const int cellIndex)
+{
+    assert(edgeAxis >= 0 && edgeAxis < 3);
+    assert(cellIndex >= 0 && cellIndex < 4);
+
+    UT_Vector3i cell(edge);
+    for (int axisOffset : {0,1})
+    {
+	if (!(cellIndex & (1 << axisOffset)))
+	{
+	    int localAxis = (edgeAxis + 1 + axisOffset) % 3;
+	    --cell[localAxis];
+	}
+    }
+
+    return cell;
+}
+
+SYS_FORCE_INLINE UT_Vector3i HDKnodeToFace(const UT_Vector3i &node, const int faceAxis, const int faceIndex)
+{
+    assert(faceAxis >= 0 && faceAxis < 3);
+    assert(faceIndex >= 0 && faceIndex < 4);
+
+    UT_Vector3i face(node);
+    for (int axisOffset : {0,1})
+    {
+	if (!(faceIndex & (1 << axisOffset)))
+	{
+	    int localAxis = (faceAxis + 1 + axisOffset) % 3;
+	    --face[localAxis];
 	}
     }
 
     return face;
 }
 
-SYS_FORCE_INLINE UT_Vector3i HDKedgeToFace(UT_Vector3i edge, const int edgeAxis,
-					    const int faceAxis, const int direction)
-{
-    assert(faceAxis >= 0 && faceAxis < 3 && edgeAxis >= 0 && edgeAxis < 3);
-    assert(faceAxis != edgeAxis);
-
-    if (direction == 0)
-    {
-	int offsetAxis = 3 - faceAxis - edgeAxis;
-	--edge[offsetAxis];
-    }
-    else
-	assert(direction == 1);
-
-    return edge;
-}
-
-SYS_FORCE_INLINE UT_Vector3i HDKedgeToCell(UT_Vector3i edge, const int edgeAxis, const int cellIndex)
-{
-    assert(edgeAxis >= 0 && edgeAxis < 3);
-    assert(cellIndex >= 0 && cellIndex < 4);
-
-    for (int axisOffset : {0,1})
-    {
-	if (!(cellIndex & (1 << axisOffset)))
-	{
-	    int localAxis = (edgeAxis + 1 + axisOffset) % 3;
-	    --edge[localAxis];
-	}
-    }
-
-    return edge;
-}
-
-SYS_FORCE_INLINE UT_Vector3i HDKnodeToFace(UT_Vector3i node, const int faceAxis, const int faceIndex)
-{
-    assert(faceAxis >= 0 && faceAxis < 3);
-    assert(faceIndex >= 0 && faceIndex < 4);
-
-    for (int axisOffset : {0,1})
-    {
-	if (!(faceIndex & (1 << axisOffset)))
-	{
-	    int localAxis = (faceAxis + 1 + axisOffset) % 3;
-	    --node[localAxis];
-	}
-    }
-
-    return node;
-}
-
-SYS_FORCE_INLINE UT_Vector3i HDKnodeToCell(UT_Vector3i node, const int cellIndex)
+SYS_FORCE_INLINE UT_Vector3i HDKnodeToCell(const UT_Vector3i &node, const int cellIndex)
 {
     assert(cellIndex >= 0 && cellIndex < 8);
 
+    UT_Vector3i cell(node);
     for (int axis : {0,1,2})
     {
 	if (!(cellIndex & (1 << axis)))
-	    --node[axis];
+	    --cell[axis];
     }
 
-    return node;
+    return cell;
 }
 
 SYS_FORCE_INLINE fpreal32 HDKgetFieldValue(const SIM_RawField &field, const UT_Vector3i &cell)
