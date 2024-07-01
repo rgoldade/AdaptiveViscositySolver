@@ -470,7 +470,7 @@ HDK_OctreeGrid::setActiveCellsAndParentListPartial(UT_Array<UT_Array<UT_Vector3i
 		    // ACTIVE cell in the neighbouring tile.
 		    if (doProcessTileBorder)
 		    {
-			auto checkAdjacentCellActivity = [&](const UT_Vector3I &start, const UT_Vector3I &end) -> bool
+			auto checkAdjacentCellActivity = [&](const UT_Vector3i &start, const UT_Vector3i &end) -> bool
 			{
 			    UT_Vector3i cell = start;
 			    for (; cell[0] < end[0]; ++cell[0])
@@ -513,11 +513,11 @@ HDK_OctreeGrid::setActiveCellsAndParentListPartial(UT_Array<UT_Array<UT_Vector3i
                 if (vitt.getValue() == UP)
                 {
                     UT_Vector3i cell(vitt.x(), vitt.y(), vitt.z());
-                    UT_Vector3I parentCell = getParentCell(cell);
+                    UT_Vector3i parentCell = getParentCell(cell);
 
 		    for (int childIndex = 0; childIndex < 8; ++childIndex)
                     {
-                        UT_Vector3I siblingCell = getChildCell(parentCell, childIndex);
+                        UT_Vector3i siblingCell = getChildCell(parentCell, childIndex);
 
 			if (HDKgetFieldValue(myOctreeGridLabels[level], siblingCell) == ACTIVE)
                         {
@@ -530,7 +530,7 @@ HDK_OctreeGrid::setActiveCellsAndParentListPartial(UT_Array<UT_Array<UT_Vector3i
 		    // contain both an UP and INACTIVE label.
                     for (int childIndex = 0; childIndex < 8; ++childIndex)
                     {
-                        UT_Vector3I siblingCell = getChildCell(parentCell, childIndex);
+                        UT_Vector3i siblingCell = getChildCell(parentCell, childIndex);
                         assert(HDKgetFieldValue(myOctreeGridLabels[level], siblingCell) != INACTIVE);
                     }
 #endif
@@ -542,8 +542,8 @@ HDK_OctreeGrid::setActiveCellsAndParentListPartial(UT_Array<UT_Array<UT_Vector3i
 		// uncompressed later and storing the parent's cell to be set DOWN.
                 else if (vitt.getValue() == ACTIVE)
                 {
-                    UT_Vector3I cell(vitt.x(), vitt.y(), vitt.z());
-                    UT_Vector3I parentCell = getParentCell(cell);
+                    UT_Vector3i cell(vitt.x(), vitt.y(), vitt.z());
+                    UT_Vector3i parentCell = getParentCell(cell);
 
                     int parentTileNumber = myOctreeGridLabels[level + 1].field()->indexToLinearTile(parentCell[0],
 												parentCell[1],
@@ -689,7 +689,7 @@ HDK_OctreeGrid::setFaceGradingPartial(UT_Array<UT_Array<UT_Vector3i>> &parallelS
 
             for (vitt.rewind(); !vitt.atEnd(); vitt.advance())
             {
-                UT_Vector3I cell(vitt.x(), vitt.y(), vitt.z());
+                UT_Vector3i cell(vitt.x(), vitt.y(), vitt.z());
 
                 int activity = vitt.getValue();
                 if (activity == ACTIVE)
@@ -822,7 +822,7 @@ HDK_OctreeGrid::setParentsUpPartial(UT_Array<UT_Array<UT_Vector3i>> &parallelNew
 
 		    for (int childIndex = 0; childIndex < 8; ++childIndex)
                     {
-                        UT_Vector3I siblingCell = getChildCell(parentCell, childIndex);
+                        UT_Vector3i siblingCell = getChildCell(parentCell, childIndex);
 
 			assert(HDKgetFieldValue(myOctreeGridLabels[level], siblingCell) == UP);
                     }
@@ -1011,7 +1011,7 @@ HDK_OctreeGrid::activeCountUnitTestPartial(bool &passed,
             if (!passed)
                 return;
 
-            UT_Vector3I cell(vitt.x(), vitt.y(), vitt.z());
+            UT_Vector3i cell(vitt.x(), vitt.y(), vitt.z());
 
             if (vitt.getValue() == INACTIVE)
             {
@@ -1236,7 +1236,7 @@ HDK_OctreeGrid::activeUnitTestPartial(bool &passed,
 				    return;
 				}
 
-				UT_Vector3I parentCell = getParentCell(adjacentCell);
+				UT_Vector3i parentCell = getParentCell(adjacentCell);
 
 				OctreeCellLabel parentLabel = getCellLabel(parentCell, level + 1);
 

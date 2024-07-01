@@ -50,7 +50,7 @@ public:
 
     void outputOctreeGeometry(GU_Detail &octreeGeometryDetail) const;
 
-    SYS_FORCE_INLINE UT_Vector3I getParentCell(UT_Vector3i cell) const
+    SYS_FORCE_INLINE UT_Vector3i getParentCell(UT_Vector3i cell) const
     {
 	// TODO: check if I can use /= with an integer
 	cell /= UT_Vector3i(2);
@@ -58,12 +58,12 @@ public:
     }
 
     // Computing parent faces is the same as parent cells.
-    SYS_FORCE_INLINE UT_Vector3I getParentFace(UT_Vector3i face) const
+    SYS_FORCE_INLINE UT_Vector3i getParentFace(UT_Vector3i face) const
     {
 	return getParentCell(face);
     }
 
-    SYS_FORCE_INLINE UT_Vector3I getParentNode(UT_Vector3i node) const
+    SYS_FORCE_INLINE UT_Vector3i getParentNode(UT_Vector3i node) const
     {
 	return getParentCell(node);
     }

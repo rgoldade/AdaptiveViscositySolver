@@ -20,20 +20,7 @@ constexpr exint HDK_UNASSIGNED = -1;
 constexpr exint HDK_SOLIDBOUNDARY = -2;
 constexpr exint HDK_OUTSIDE = -3;
 
-class UT_Vector5I : public UT_FixedVector<int, 5, true>
-{
-public:
-    SYS_FORCE_INLINE UT_Vector5I() : UT_Vector5I(0, 0, 0, 0, 0) {}
-
-    SYS_FORCE_INLINE UT_Vector5I(int v0, int v1, int v2, int v3, int v4)
-    {
-        vec[0] = v0;
-        vec[1] = v1;
-        vec[2] = v2;
-        vec[3] = v3;
-        vec[4] = v4;
-    }
-};
+using UT_Vector5I = UT_FixedVector<int, 5>;
 
 #ifdef USESINGLEPRECISION
     using SolveType = fpreal32;
