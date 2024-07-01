@@ -5,7 +5,7 @@ Source code from the SIGGRAPH 2019 technical paper [An Adaptive Variational Fini
 ## Build
 To build this project in Houdini (Linux):
 
-1. Install Houdini 17.0 or higher.
+1. Install Houdini 20.0 or higher.
 
 2. Go to install folder (/opt/hfs.xx).
 
